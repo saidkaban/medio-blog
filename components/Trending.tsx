@@ -71,12 +71,13 @@ const Trending: React.FC = () => {
         <h3 className={styles.title}>Trending on medium</h3>
       </div>
       <div className={styles.items}>
-        {TRENDING_ITEMS.map((item) => (
+        {TRENDING_ITEMS.map((item, idx) => (
           <TrendingItem
             key={item.id}
             title={item.title}
             author={item.author}
             date={item.date}
+            order={idx + 1}
           />
         ))}
       </div>

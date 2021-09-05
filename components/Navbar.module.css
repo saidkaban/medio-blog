@@ -1,6 +1,7 @@
 .navContainer {
   width: 100%;
   display: block;
+  /* position: fixed; */
   background-color: #c4e2ff;
   border-bottom: 1px solid rgb(0, 0, 0);
 }
