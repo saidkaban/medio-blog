@@ -1,0 +1,11 @@
+.trendingItemContainer:not(:last-child) {
+  cursor: pointer;
+}
+
+.author {
+  font-weight: 500;
+}
+
+.date {
+  font-weight: 300;
+}
