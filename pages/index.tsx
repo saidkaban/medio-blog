@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import BlogPosts from '../components/BlogPosts';
 
 import Navbar from '../components/Navbar';
 import Trending from '../components/Trending';
+import Posts from '../components/Posts';
 
 import styles from '../styles/Home.module.css';
 
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       <main className={styles.content}>
         <div className={styles.posts}>
           <Trending />
-          <BlogPosts />
+          <Posts />
         </div>
       </main>
     </div>

@@ -1,4 +1,13 @@
-.trendingItemContainer:not(:last-child) {
+.itemContainer {
+  display: flex;
+  align-items: center;
+}
+
+.order {
+  margin-right: 2.5rem;
+}
+
+.item {
   cursor: pointer;
 }
 
