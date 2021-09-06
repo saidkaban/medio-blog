@@ -1,29 +1,25 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
+import type { NextPage } from "next";
+import Head from "next/head";
+import HomeLayout from "../components/Layout/HomeLayout";
+import Trending from "../components/Content/Trending";
+import Posts from "../components/Content/Posts";
 
-import Navbar from '../components/Navbar';
-import Trending from '../components/Trending';
-import Posts from '../components/Posts';
-
-import styles from '../styles/Home.module.css';
+import styles from "./Home.module.scss";
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Medium</title>
-        <link rel='icon' type='image/x-icon' href='styles/favicon.ico' />
+        <link rel="icon" type="image/x-icon" href="styles/favicon.ico" />
       </Head>
-      <header>
-        <Navbar />
-      </header>
-      <main className={styles.content}>
+      <HomeLayout>
         <div className={styles.posts}>
           <Trending />
           <Posts />
         </div>
-      </main>
-    </div>
+      </HomeLayout>
+    </>
   );
 };
 

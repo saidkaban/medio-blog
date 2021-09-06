@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import styles from './TrendingItem.module.css';
+import styles from "./TrendingItem.module.css";
 
 const TrendingItem: React.FC<{
   title: string;
   author: string;
-  date: number;
+  date: string;
   order: number;
 }> = ({ title, author, date, order }) => {
   return (

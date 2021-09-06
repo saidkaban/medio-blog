@@ -1,0 +1,36 @@
+$mobile-min: 320px;
+$mobile-max: 767px;
+$tablet-min: 768px;
+$tablet-max: 1024px;
+$laptop-min: 1025px;
+
+// BREAKPOINTS
+@mixin mobile {
+  @media (min-width: #{$mobile-min}) and (max-width: #{$mobile-max}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet-min}) and (max-width: #{$tablet-max}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (min-width: #{$laptop-min}) {
+    @content;
+  }
+}
+
+@mixin not-laptop {
+  @media (max-width: #{$laptop-min}) {
+    @content;
+  }
+}
+
+@mixin not-mobile {
+  @media (min-width: #{$tablet-min}) {
+    @content;
+  }
+}

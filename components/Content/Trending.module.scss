@@ -1,0 +1,57 @@
+@import "variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding-top: 4rem;
+
+  width: 900px;
+
+  @include tablet {
+    width: 600px;
+  }
+
+  @include mobile {
+    width: 300px;
+  }
+}
+
+.title {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.itemsContainer {
+  width: 900px;
+  display: flex;
+  justify-content: center;
+
+  @include tablet {
+    width: 600px;
+  }
+
+  @include mobile {
+    width: 300px;
+  }
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+
+  div {
+    flex: 1 0 300px;
+
+    // FOR COMPATIBILITY ON ALL PHONE SIZES TO FIT AVAILABLE WIDTH
+    @include mobile {
+      flex: 1 0 auto;
+    }
+  }
+}
