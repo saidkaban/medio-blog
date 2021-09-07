@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 .container {
   display: flex;
@@ -12,7 +12,7 @@
   align-items: center;
   padding-top: 4rem;
 
-  width: 900px;
+  width: 90rem;
 
   @include tablet {
     width: 600px;
@@ -29,7 +29,7 @@
 }
 
 .itemsContainer {
-  width: 900px;
+  width: 90rem;
   display: flex;
   justify-content: center;
 
