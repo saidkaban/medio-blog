@@ -1,6 +1,5 @@
 .container {
   min-height: 100vh;
-  height: 500rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10,7 +9,12 @@
   margin: 0 10rem;
 }
 
-.posts {
+.blogContent {
   margin: 0 auto;
   width: 100%;
+}
+
+.posts {
+  margin-top: 5rem;
+  border-top: 1px solid rgba(230, 230, 230, 1);
 }
