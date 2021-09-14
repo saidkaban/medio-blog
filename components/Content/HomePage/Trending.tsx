@@ -88,6 +88,7 @@ const Trending: React.FC<{
                 author={item.author}
                 date={item.date}
                 order={idx + 1}
+                id={item.id}
               />
             </div>
           ))}

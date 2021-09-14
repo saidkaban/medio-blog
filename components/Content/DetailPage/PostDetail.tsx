@@ -10,6 +10,7 @@ const PostDetail: React.FC<{
     author: string;
     date: string;
     image: string;
+    text: string;
     id: string;
   };
 }> = ({ post }) => {
@@ -18,8 +19,15 @@ const PostDetail: React.FC<{
       <div style={{ textAlign: 'center' }}>
         <h1 className={styles.title}>{post?.title}</h1>
       </div>
-      <div style={{ borderRadius: '2.5%', overflow: 'hidden' }}>
-        <Image src={post.image} alt='Post image' height={600} width={900} />
+      <div style={{ textAlign: 'center' }}>
+        <h3 className={styles.author}>{post?.author}</h3>
+        <h5 className={styles.date}>{post?.date}</h5>
+      </div>
+      <div className={styles.imageContainer}>
+        <Image src={post?.image} alt='Post image' height={600} width={900} />
+      </div>
+      <div className={styles.textContainer}>
+        <p>{post.text}</p>
       </div>
     </div>
   );

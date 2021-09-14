@@ -17,6 +17,7 @@ const PostDetailPage: NextPage<{
     author: string;
     date: string;
     image: string;
+    text: string;
     id: string;
   };
 }> = ({ post }) => {
