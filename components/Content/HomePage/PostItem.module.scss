@@ -1,0 +1,12 @@
+.postContent {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+  cursor: pointer;
+  padding: 2.5rem;
+
+  // &:hover {
+  //   border: .025rem solid rgba(230, 230, 230, 1);
+  //   border-radius: 2.5%;
+  // }
+}

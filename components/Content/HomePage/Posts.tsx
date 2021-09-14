@@ -3,7 +3,7 @@ import PostItem from './PostItem';
 
 import styles from './Posts.module.scss';
 
-const POST_ITEMS = [
+export const POST_ITEMS = [
   {
     // When Math.random() used, server does not matches client.
     id: '1',
@@ -66,6 +66,7 @@ const Posts: React.FC = () => {
             title={item.title}
             date={item.date}
             image={item.image}
+            id={item.id}
           />
         ))}
       </div>
