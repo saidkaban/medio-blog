@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import type { GetStaticProps, NextPage } from 'next';
+import { DocumentData } from '@firebase/firestore';
 import Head from 'next/head';
 
 import {
@@ -7,6 +8,8 @@ import {
   getDoc,
   collection,
   getDocs,
+  query,
+  onSnapshot,
   getFirestore,
 } from 'firebase/firestore';
 import { app } from '../lib/firebaseInstance';
@@ -17,16 +20,13 @@ import Posts from '../components/Content/HomePage/Posts';
 
 import styles from '../styles/Home.module.scss';
 
-const Home: NextPage<{ posts: {} }> = ({ posts }) => {
-  console.log(posts);
+const Home: NextPage<{ posts: [] }> = ({ posts }) => {
 
   return (
     <>
       <Head>
         <title>Home</title>
         <link rel='icon' type='image/svg+xml' href='../assets/favicon.svg' />
-        {/* <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> */}
         <link
           href='https://fonts.googleapis.com/css2?family=IM+Fell+English&family=IM+Fell+French+Canon&display=swap'
           rel='stylesheet'
@@ -34,9 +34,9 @@ const Home: NextPage<{ posts: {} }> = ({ posts }) => {
       </Head>
       <HomeLayout>
         <div className={styles.blogContent}>
-          <Trending />
+          <Trending trendingPosts={posts} />
           <div className={styles.posts}>
-            <Posts />
+            <Posts posts={posts} />
           </div>
         </div>
       </HomeLayout>
@@ -47,23 +47,29 @@ const Home: NextPage<{ posts: {} }> = ({ posts }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const db = getFirestore(app);
 
-  // const docRef = doc(db, 'posts', 'vlXk20N6AfTEeKVVTFAD');
-  const postsRef = collection(db, 'posts');
+  const postsSnap = await getDocs(collection(db, 'posts'));
+  const posts: DocumentData[] = [];
 
-  const postsSnap = getDocs(postsRef);
+  postsSnap.forEach((doc) => {
+    posts.push({ ...doc.data(), id: doc.id });
+  });
 
-  const posts = JSON.stringify(postsSnap);
+  // Couldn't get realtime updates to work
 
-  // const docSnap = await getDoc(docRef);
-
-  // const unsub = onSnapshot(doc(db, 'posts'), (doc) => {
-  //   console.log('Current data: ', doc.data());
+  // const q = query(collection(db, 'posts'));
+  // const posts: DocumentData[] = [];
+  // const unsubscribe = onSnapshot(q, (querySnapshot) => {
+  //   querySnapshot.forEach((doc) => {
+  //     posts.push(doc.data());
+  //   });
+  //   console.log('posts here: ', posts);
   // });
 
   return {
     props: {
-      posts,
+      posts: posts,
     },
+    // revalidate: 10,
   };
 };
 

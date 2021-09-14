@@ -4,9 +4,11 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { GetStaticProps, GetStaticPaths } from 'next';
 
-import DetailLayout from '../../components/Layout/DetailLayout';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { DocumentData } from '@firebase/firestore';
+import { app } from '../../lib/firebaseInstance';
 
-import { POST_ITEMS } from '../../components/Content/HomePage/Posts';
+import DetailLayout from '../../components/Layout/DetailLayout';
 import PostDetail from '../../components/Content/DetailPage/PostDetail';
 
 const PostDetailPage: NextPage<{
@@ -31,8 +33,19 @@ const PostDetailPage: NextPage<{
   );
 };
 
+// Can we use api to solve repetition problem here?
+
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = POST_ITEMS.map((item) => {
+  const db = getFirestore(app);
+
+  const postsSnap = await getDocs(collection(db, 'posts'));
+  const posts: DocumentData[] = [];
+
+  postsSnap.forEach((doc) => {
+    posts.push({ ...doc.data(), id: doc.id });
+  });
+
+  const paths = posts.map((item) => {
     return {
       params: { pid: item.id },
     };
@@ -45,7 +58,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const post = POST_ITEMS.find((post) => post.id === context?.params?.pid);
+  const db = getFirestore(app);
+
+  const postsSnap = await getDocs(collection(db, 'posts'));
+  const posts: DocumentData[] = [];
+
+  postsSnap.forEach((doc) => {
+    posts.push({ ...doc.data(), id: doc.id });
+  });
+  const post = posts.find((post) => post.id === context?.params?.pid);
 
   return {
     props: {
