@@ -21,12 +21,10 @@ import Posts from '../components/Content/HomePage/Posts';
 import styles from '../styles/Home.module.scss';
 
 const Home: NextPage<{ posts: [] }> = ({ posts }) => {
-
   return (
     <>
       <Head>
-        <title>Home</title>
-        <link rel='icon' type='image/svg+xml' href='../assets/favicon.svg' />
+        <title>Homepage</title>
         <link
           href='https://fonts.googleapis.com/css2?family=IM+Fell+English&family=IM+Fell+French+Canon&display=swap'
           rel='stylesheet'

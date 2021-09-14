@@ -24,7 +24,6 @@ const PostDetailPage: NextPage<{
     <>
       <Head>
         <title>{post.title}</title>
-        <link rel='icon' type='image/x-icon' href='styles/favicon.ico' />
       </Head>
       <DetailLayout>
         <PostDetail post={post} />
