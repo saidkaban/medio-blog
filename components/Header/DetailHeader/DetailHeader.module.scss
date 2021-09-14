@@ -1,9 +1,10 @@
-@import "variables";
+@import 'variables';
 
 .container {
   top: 0px;
   position: sticky;
   z-index: 10;
+  background-color: rgb(255, 255, 255);
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 

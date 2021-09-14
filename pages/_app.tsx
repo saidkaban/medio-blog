@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         {/* favicon not changing */}
 
-        <link rel='icon' type='image/svg+xml' href='/assets/favicon.svg' />
+        <link rel='icon' type='image/svg+xml' href='../assets/favicon.svg' />
       </Head>
       <Component {...pageProps} />
     </>

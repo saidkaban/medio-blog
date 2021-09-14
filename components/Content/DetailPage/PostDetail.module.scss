@@ -3,5 +3,38 @@
   font-family: 'IM Fell French Canon', serif;
   font-size: 5rem;
   font-weight: 400;
+  margin-bottom: 2.5rem;
+}
+
+.author {
+  color: rgba(41, 41, 41, 1);
+  font-family: 'IM Fell French Canon', serif;
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+
+.date {
+  color: rgba(41, 41, 41, 1);
+  font-family: 'IM Fell French Canon', serif;
+  font-size: 1.75rem;
+  font-weight: 400;
   margin-bottom: 5rem;
+}
+
+.imageContainer {
+  border-radius: '2.5%';
+  overflow: 'hidden';
+  text-align: center;
+}
+
+.textContainer {
+  width: 35%;
+  margin: 0 auto;
+  margin-top: 5rem;
+  font-size: 2rem;
+  font-weight: 300;
+  color: rgb(41, 41, 41);
+  line-height: 4rem;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  word-break: break-word;
 }
