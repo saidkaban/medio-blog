@@ -1,7 +1,7 @@
 @import 'variables';
 
 .container {
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0.9);
   border-bottom: 1px solid rgb(230, 230, 230);
 }
 
@@ -11,9 +11,9 @@
 }
 
 .navbar {
-  height: 6.5rem;
+  height: 9rem;
   margin: 0 35rem;
-
+  margin-top: 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,6 +28,7 @@
   width: auto;
   height: 2.5rem;
   cursor: pointer;
+  fill: rgb(255, 255, 255);
 }
 
 .navigation {
@@ -36,9 +37,10 @@
   align-items: center;
 }
 
-.navItems {
+.footerItems {
   margin-right: 2rem;
-  font-size: inherit;
+  color: rgba(255, 255, 255, 0.98);
+  font-size: 1.6rem;
   cursor: pointer;
   font-weight: 300;
 }
