@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import Link from 'next/link';
 import cx from 'classnames';
 import { motion, useTransform, useViewportScroll } from 'framer-motion';
+
+import AuthContext from '../../../store/auth-context';
 
 import styles from './HomeHeader.module.scss';
 
 const HomeHeader = () => {
+  const authCtx = useContext(AuthContext);
+
   const { scrollYProgress } = useViewportScroll();
   const background = useTransform(
     scrollYProgress,
     [0, 0.3],
     ['#c4e2ff', '#ffffff']
   );
+
+  const signInAuth = () => {
+    authCtx?.switchToSignIn();
+    authCtx?.openModal();
+  };
+
+  const signUpAuth = () => {
+    authCtx?.switchToSignUp();
+    authCtx?.openModal();
+  };
 
   return (
     <header className={styles.container}>
@@ -31,10 +44,15 @@ const HomeHeader = () => {
             <a href='#' className={cx(styles.navItems, styles.noMobile)}>
               Write
             </a>
-            <a href='#' className={cx(styles.navItems, styles.noMobile)}>
+            <a
+              className={cx(styles.navItems, styles.noMobile)}
+              onClick={signInAuth}
+            >
               Sign in
             </a>
-            <button className={styles.navItems}>Get started</button>
+            <button className={styles.navItems} onClick={signUpAuth}>
+              Get started
+            </button>
           </div>
         </nav>
       </motion.div>

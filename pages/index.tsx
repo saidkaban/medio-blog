@@ -1,26 +1,26 @@
+import { useContext } from 'react';
+
 /* eslint-disable @next/next/no-page-custom-font */
 import type { GetStaticProps, NextPage } from 'next';
-import { DocumentData } from '@firebase/firestore';
 import Head from 'next/head';
 
-import {
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-  query,
-  onSnapshot,
-  getFirestore,
-} from 'firebase/firestore';
+import { DocumentData } from '@firebase/firestore';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import { app } from '../lib/firebaseInstance';
 
-import HomeLayout from '../components/Layout/HomeLayout';
+import AuthContext from '../store/auth-context';
+
+import HomeLayout from '../components/Layout/HomeLayout/HomeLayout';
 import Trending from '../components/Content/HomePage/Trending';
 import Posts from '../components/Content/HomePage/Posts';
+import Modal from '../components/UI/Modal';
+import Auth from '../components/Auth/Auth';
 
 import styles from '../styles/Home.module.scss';
 
 const Home: NextPage<{ posts: [] }> = ({ posts }) => {
+  const authCtx = useContext(AuthContext);
+
   return (
     <>
       <Head>
@@ -31,6 +31,11 @@ const Home: NextPage<{ posts: [] }> = ({ posts }) => {
         ></link>
       </Head>
       <HomeLayout>
+        {authCtx?.authModalOpen && (
+          <Modal onClose={() => {}}>
+            <Auth />
+          </Modal>
+        )}
         <div className={styles.blogContent}>
           <Trending trendingPosts={posts} />
           <div className={styles.posts}>
@@ -62,6 +67,16 @@ export const getStaticProps: GetStaticProps = async () => {
   //   });
   //   console.log('posts here: ', posts);
   // });
+
+
+  // POSTS ARE SORTED ACCORDING TO THEIR RECENCY
+  posts.sort((firstItem, secondItem) =>
+    firstItem.date < secondItem.date
+      ? 1
+      : firstItem.date > secondItem.date
+      ? -1
+      : 0
+  );
 
   return {
     props: {

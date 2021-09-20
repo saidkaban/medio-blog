@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import Footer from '../../Footer/Footer';
-import HomeHeader from '../../Header/HomeHeader';
+import HomeHeader from '../../Header/HomeHeader/HomeHeader';
 import styles from './HomeLayout.module.scss';
 
 const HomeLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
