@@ -1,27 +1,15 @@
-import React from 'react';
+import React from "react";
 
-export interface AuthContextInterface {
-  authModalOpen: boolean;
-  isAuthSignUp: boolean;
-  openModal: () => void;
+export interface IModalContext {
+  openModal: (type: "sign-in" | "sign-up") => void;
   closeModal: () => void;
-  switchToSignIn: () => void;
-  switchToSignUp: () => void;
-  signUp: () => void;
-  signIn: () => void;
-  isAuthenticated: boolean;
+  modalType: "sign-in" | "sign-up" | null;
 }
 
-const AuthContext = React.createContext<AuthContextInterface | null>({
-  authModalOpen: false,
-  isAuthSignUp: true,
-  openModal: () => {},
+const ModalContext = React.createContext<IModalContext | null>({
+  openModal: (type: "sign-in" | "sign-up") => {},
   closeModal: () => {},
-  switchToSignUp: () => {},
-  switchToSignIn: () => {},
-  signUp: () => {},
-  signIn: () => {},
-  isAuthenticated: true,
+  modalType: null,
 });
 
-export default AuthContext;
+export default ModalContext;
