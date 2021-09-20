@@ -1,41 +1,35 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 
 /* eslint-disable @next/next/no-page-custom-font */
-import type { GetStaticProps, NextPage } from 'next';
-import Head from 'next/head';
+import type { GetStaticProps, NextPage } from "next";
+import Head from "next/head";
 
-import { DocumentData } from '@firebase/firestore';
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
-import { app } from '../lib/firebaseInstance';
+import { DocumentData } from "@firebase/firestore";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { app } from "../lib/firebaseInstance";
 
-import AuthContext from '../store/auth-context';
+import HomeLayout from "../components/Layout/HomeLayout/HomeLayout";
+import Trending from "../components/Content/HomePage/Trending";
+import Posts from "../components/Content/HomePage/Posts";
+import Modal from "../components/UI/Modal";
 
-import HomeLayout from '../components/Layout/HomeLayout/HomeLayout';
-import Trending from '../components/Content/HomePage/Trending';
-import Posts from '../components/Content/HomePage/Posts';
-import Modal from '../components/UI/Modal';
-import Auth from '../components/Auth/Auth';
-
-import styles from '../styles/Home.module.scss';
+import styles from "../styles/Home.module.scss";
+import ModalContext from "../store/auth-context";
 
 const Home: NextPage<{ posts: [] }> = ({ posts }) => {
-  const authCtx = useContext(AuthContext);
+  const modalCtx = useContext(ModalContext);
 
   return (
     <>
       <Head>
         <title>Homepage</title>
         <link
-          href='https://fonts.googleapis.com/css2?family=IM+Fell+English&family=IM+Fell+French+Canon&display=swap'
-          rel='stylesheet'
+          href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=IM+Fell+French+Canon&display=swap"
+          rel="stylesheet"
         ></link>
       </Head>
       <HomeLayout>
-        {authCtx?.authModalOpen && (
-          <Modal onClose={() => {}}>
-            <Auth />
-          </Modal>
-        )}
+        <Modal type={modalCtx?.modalType || null} onClose={() => {}}></Modal>
         <div className={styles.blogContent}>
           <Trending trendingPosts={posts} />
           <div className={styles.posts}>
@@ -50,7 +44,7 @@ const Home: NextPage<{ posts: [] }> = ({ posts }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const db = getFirestore(app);
 
-  const postsSnap = await getDocs(collection(db, 'posts'));
+  const postsSnap = await getDocs(collection(db, "posts"));
   const posts: DocumentData[] = [];
 
   postsSnap.forEach((doc) => {
@@ -67,7 +61,6 @@ export const getStaticProps: GetStaticProps = async () => {
   //   });
   //   console.log('posts here: ', posts);
   // });
-
 
   // POSTS ARE SORTED ACCORDING TO THEIR RECENCY
   posts.sort((firstItem, secondItem) =>
