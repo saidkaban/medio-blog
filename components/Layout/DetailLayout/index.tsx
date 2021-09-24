@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import Footer from '../../Footer/Footer';
 
-import DetailHeader from '../../Header/DetailHeader';
+import DetailHeader from '../../Header/DetailHeader/DetailHeader';
 
 import styles from './DetailLayout.module.scss';
 

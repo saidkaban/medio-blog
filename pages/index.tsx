@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 /* eslint-disable @next/next/no-page-custom-font */
 import type { GetStaticProps, NextPage } from "next";
@@ -8,28 +8,41 @@ import { DocumentData } from "@firebase/firestore";
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "../lib/firebaseInstance";
 
+import ModalContext from "../store/modal-context";
+import Modal from "../components/UI/Modal";
 import HomeLayout from "../components/Layout/HomeLayout/HomeLayout";
 import Trending from "../components/Content/HomePage/Trending";
 import Posts from "../components/Content/HomePage/Posts";
-import Modal from "../components/UI/Modal";
 
 import styles from "../styles/Home.module.scss";
-import ModalContext from "../store/auth-context";
 
 const Home: NextPage<{ posts: [] }> = ({ posts }) => {
   const modalCtx = useContext(ModalContext);
+
+  useEffect(() => {
+    if (modalCtx?.modalType) {
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+      document.body.style.paddingRight = "0px";
+    };
+  }, [modalCtx?.modalType]);
 
   return (
     <>
       <Head>
         <title>Homepage</title>
         <link
-          href="https://fonts.googleapis.com/css2?family=IM+Fell+English&family=IM+Fell+French+Canon&display=swap"
-          rel="stylesheet"
+          href='https://fonts.googleapis.com/css2?family=IM+Fell+English&family=IM+Fell+French+Canon&display=swap'
+          rel='stylesheet'
         ></link>
       </Head>
       <HomeLayout>
-        <Modal type={modalCtx?.modalType || null} onClose={() => {}}></Modal>
+        <Modal
+          type={modalCtx?.modalType || null}
+          onClose={() => modalCtx?.closeModal()}
+        ></Modal>
         <div className={styles.blogContent}>
           <Trending trendingPosts={posts} />
           <div className={styles.posts}>

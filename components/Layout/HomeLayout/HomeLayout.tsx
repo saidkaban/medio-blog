@@ -1,13 +1,19 @@
-import React, { ReactNode } from 'react';
-import Footer from '../../Footer/Footer';
-import HomeHeader from '../../Header/HomeHeader/HomeHeader';
-import styles from './HomeLayout.module.scss';
+import React, { ReactNode, useContext } from "react";
+
+import cx from "classnames";
+
+import ModalContext from "../../../store/modal-context";
+
+import HomeHeader from "../../Header/HomeHeader/HomeHeader";
+import Footer from "../../Footer/Footer";
 
 const HomeLayout: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const modalCtx = useContext(ModalContext);
+
   return (
-    <div className={styles.container}>
+    <div>
       <HomeHeader />
-      <main className={styles.content}>{children}</main>
+      <main>{children}</main>
       <Footer />
     </div>
   );
