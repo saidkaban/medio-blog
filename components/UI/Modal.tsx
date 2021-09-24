@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../store/modal-context";
 import Auth from "../Auth/Auth";
 
 import styles from "./Modal.module.scss";
@@ -21,15 +21,14 @@ const ModalOverlay: React.FC = ({ children }) => {
 const Modal: React.FC<{
   onClose: () => void;
   type: "sign-in" | "sign-up" | null;
-}> = ({ onClose, type }) => {
+}> = ({ type, onClose }) => {
   return (
     type && (
       <React.Fragment>
         <Backdrop />
         <ModalOverlay>
-          <Auth type={type} />
+          <Auth type={type} onClose={onClose} />
         </ModalOverlay>
-        ,
       </React.Fragment>
     )
   );

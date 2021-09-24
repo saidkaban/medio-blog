@@ -1,15 +1,15 @@
 import React from "react";
 
-export interface IModalContext {
-  openModal: (type: "sign-in" | "sign-up") => void;
-  closeModal: () => void;
-  modalType: "sign-in" | "sign-up" | null;
+export interface IAuthContext {
+  loggedIn: boolean;
+  logUserIn: () => void;
+  logUserOut: () => void;
 }
 
-const ModalContext = React.createContext<IModalContext | null>({
-  openModal: (type: "sign-in" | "sign-up") => {},
-  closeModal: () => {},
-  modalType: null,
+const AuthContext = React.createContext<IAuthContext | null>({
+  loggedIn: false,
+  logUserIn: () => {},
+  logUserOut: () => {},
 });
 
-export default ModalContext;
+export default AuthContext;
