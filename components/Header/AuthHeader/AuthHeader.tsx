@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { motion, useTransform, useViewportScroll } from "framer-motion";
 
 import styles from "./AuthHeader.module.scss";
-import ModalContext from "../../../store/modal-context";
+import ModalContext from "../../../store/ModalStore/modal-context";
 
 const AuthHeader = () => {
   const modalCtx = useContext(ModalContext);

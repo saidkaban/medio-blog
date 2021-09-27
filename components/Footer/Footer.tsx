@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from "react";
 
-import cx from 'classnames';
-import Link from 'next/link';
+import cx from "classnames";
+import Link from "next/link";
 
-import styles from './Footer.module.scss';
+import styles from "./Footer.module.scss";
+import AuthContext from "../../store/AuthStore/auth-context";
 
 const Footer = () => {
+  const authCtx = useContext(AuthContext);
+
   return (
     <footer className={styles.container}>
       <nav className={styles.navbar}>
@@ -18,9 +21,11 @@ const Footer = () => {
           <Link href='#' passHref>
             <a className={cx(styles.footerItems, styles.noMobile)}>About</a>
           </Link>
-          <Link href='#' passHref>
-            <a className={cx(styles.footerItems, styles.noMobile)}>Write</a>
-          </Link>
+          {authCtx?.loggedInUser.uid && (
+            <Link href='/new-post' passHref>
+              <a className={cx(styles.footerItems, styles.noMobile)}>Write</a>
+            </Link>
+          )}
           <Link href='#' passHref>
             <a className={cx(styles.footerItems, styles.noMobile)}>Help</a>
           </Link>

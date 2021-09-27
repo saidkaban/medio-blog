@@ -1,13 +1,16 @@
 import React from "react";
 
 export interface IAuthContext {
-  loggedIn: boolean;
-  logUserIn: () => void;
+  loggedInUser: {
+    uid: string;
+    name: string;
+  };
+  logUserIn: (userId: string, name: string) => void;
   logUserOut: () => void;
 }
 
 const AuthContext = React.createContext<IAuthContext | null>({
-  loggedIn: false,
+  loggedInUser: { uid: "", name: "" },
   logUserIn: () => {},
   logUserOut: () => {},
 });

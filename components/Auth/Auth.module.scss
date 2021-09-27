@@ -26,6 +26,7 @@
   font-weight: 400;
   font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
   line-height: 3.2rem;
+  margin-bottom: 1.5rem;
 }
 
 .greeting {
@@ -38,7 +39,6 @@
   border: 0.5px solid #ccc;
   border-radius: 50rem;
   background-color: white;
-  padding: 1rem;
   width: 70%;
   font-size: 1.4rem;
   &:hover {
@@ -47,6 +47,16 @@
   }
   &:last-of-type {
     margin-bottom: 1.5rem;
+  }
+}
+
+.authContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > img {
+    width: 16px;
   }
 }
 

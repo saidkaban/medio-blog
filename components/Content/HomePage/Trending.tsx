@@ -4,46 +4,6 @@ import TrendingItem from './TrendingItem';
 
 import styles from './Trending.module.scss';
 
-const TRENDING_ITEMS = [
-  {
-    // When Math.random() used, server does not matches client.
-    id: '1',
-    author: 'Said Kaban',
-    title: 'How to clone Medium blog?',
-    date: '2020-10-10',
-  },
-  {
-    id: '2',
-    author: 'Berk Elmas',
-    title: 'How to create React app?',
-    date: '2020-10-10',
-  },
-  {
-    id: '3',
-    author: 'Matt Jones',
-    title: 'Way to overcome difficulties',
-    date: '2020-10-10',
-  },
-  {
-    id: '4',
-    author: 'John Terry',
-    title: 'To Kill a Mockingbird',
-    date: '2020-10-10',
-  },
-  {
-    id: '5',
-    author: 'Rebecca Stones',
-    title: 'Of Mice and Men',
-    date: '2020-10-10',
-  },
-  {
-    id: '6',
-    author: 'Claudia Johnson',
-    title: 'Pandemic and our lives',
-    date: '2020-10-10',
-  },
-];
-
 const Trending: React.FC<{
   trendingPosts: {
     id: string;

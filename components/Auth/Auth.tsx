@@ -1,8 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext } from "react";
-
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/router";
 
-import ModalContext from "../../store/modal-context";
+import { app } from "../../lib/firebaseInstance";
+
+import ModalContext from "../../store/ModalStore/modal-context";
+import AuthContext from "../../store/AuthStore/auth-context";
 
 import styles from "./Auth.module.scss";
 
@@ -11,6 +16,7 @@ const Auth: React.FC<{
   onClose: () => void;
 }> = ({ type, onClose }) => {
   const modalCtx = useContext(ModalContext);
+  const authCtx = useContext(AuthContext);
   const router = useRouter();
 
   const goToSignUpPageHandler = () => {
@@ -21,6 +27,32 @@ const Auth: React.FC<{
   const goToSignInPageHandler = () => {
     modalCtx?.closeModal();
     router.push("/sign-in");
+  };
+
+  const socialAuthHandler = () => {
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then(async (result) => {
+        const user = result.user;
+        if (user.displayName) {
+          localStorage.setItem("loggedInUserId", user.uid);
+          localStorage.setItem("loggedInUserName", user.displayName);
+          authCtx?.logUserIn(user.uid, user.displayName);
+
+          const db = getFirestore(app);
+          await setDoc(doc(db, "users", user.uid), {
+            userName: user.displayName,
+            userEmail: user.email,
+          });
+          router.replace("/");
+          modalCtx?.closeModal();
+        }
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        console.log(error);
+      });
   };
 
   const content =
@@ -34,14 +66,23 @@ const Auth: React.FC<{
           Create an account to receive great stories in your inbox, personalize
           your homepage, and follow authors and topics that you love.
         </p>
-        <button className={styles.authButton} onClick={goToSignUpPageHandler}>
-          Sign up with Google
+        <button className={styles.authButton} onClick={socialAuthHandler}>
+          <div className={styles.authContent}>
+            <img src='/google.svg' alt='Google logo'></img>
+            <p style={{ paddingLeft: "1rem" }}>Sign up with Google</p>
+          </div>
         </button>
+        {/* <button className={styles.authButton} onClick={goToSignUpPageHandler}>
+          <div className={styles.authContent}>
+            <img src='/twitter.svg' alt='Twitter logo'></img>
+            <p style={{ paddingLeft: "1.5rem" }}>Sign up with Twitter</p>
+          </div>
+        </button> */}
         <button className={styles.authButton} onClick={goToSignUpPageHandler}>
-          Sign up with Facebook
-        </button>
-        <button className={styles.authButton} onClick={goToSignUpPageHandler}>
-          Sign up with email
+          <div className={styles.authContent}>
+            <img src='/email.svg' alt='Email icon'></img>
+            <p style={{ paddingLeft: "1.5rem" }}>Sign up with email</p>
+          </div>
         </button>
         <p>
           Already have an account?{" "}
@@ -66,14 +107,23 @@ const Auth: React.FC<{
           <h3 className={styles.closeButton}>X</h3>
         </div>
         <h1 className={styles.title}>Welcome back.</h1>
-        <button className={styles.authButton} onClick={goToSignInPageHandler}>
-          Sign in with Google
+        <button className={styles.authButton} onClick={socialAuthHandler}>
+          <div className={styles.authContent}>
+            <img src='/google.svg' alt='Google logo'></img>
+            <p style={{ paddingLeft: "1rem" }}>Sign in with Google</p>
+          </div>
         </button>
+        {/* <button className={styles.authButton} onClick={goToSignInPageHandler}>
+          <div className={styles.authContent}>
+            <img src='/twitter.svg' alt='Twitter logo'></img>
+            <p style={{ paddingLeft: "1.5rem" }}>Sign in with Twitter</p>
+          </div>
+        </button> */}
         <button className={styles.authButton} onClick={goToSignInPageHandler}>
-          Sign in with Facebook
-        </button>
-        <button className={styles.authButton} onClick={goToSignInPageHandler}>
-          Sign in with email
+          <div className={styles.authContent}>
+            <img src='/email.svg' alt='Email icon'></img>
+            <p style={{ paddingLeft: "1.5rem" }}>Sign in with email</p>
+          </div>
         </button>
         <p>
           No account?{" "}
