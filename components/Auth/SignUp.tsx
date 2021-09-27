@@ -1,20 +1,26 @@
 import React, { ChangeEvent, FormEvent, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 import { app } from "../../lib/firebaseInstance";
 
 import styles from "./SignUp.module.scss";
 import LoadingSpinner from "../UI/LoadingSpinner";
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../store/AuthStore/auth-context";
 
 const SignUp = () => {
   const authCtx = useContext(AuthContext);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const auth = getAuth(app);
+
+  const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
 
   const emailChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -24,6 +30,7 @@ const SignUp = () => {
     setPassword(event.target.value);
   };
 
+  const nameNotValid = name.trim() === "";
   const emailNotValid = email.trim() === "" || !email.includes("@");
   const passwordNotValid = password.trim() === "" || password.length < 6;
 
@@ -32,12 +39,18 @@ const SignUp = () => {
     setLoading(true);
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Signed in
         const user = userCredential.user;
         if (user.uid) {
-          console.log(user);
-          authCtx?.logUserIn();
+          localStorage.setItem("loggedInUserId", user.uid);
+          localStorage.setItem("loggedInUserName", name);
+          authCtx?.logUserIn(user.uid, name);
+          const db = getFirestore(app);
+          await setDoc(doc(db, "users", user.uid), {
+            userName: name,
+            userEmail: email,
+          });
           router.replace("/");
         }
       })
@@ -61,6 +74,10 @@ const SignUp = () => {
       ) : (
         <>
           <div className={styles.inputContainer}>
+            <label>Enter your name</label>
+            <input value={name} onChange={nameChangeHandler} />
+          </div>
+          <div className={styles.inputContainer}>
             <label>Enter email</label>
             <input value={email} onChange={emailChangeHandler} />
           </div>
@@ -72,7 +89,10 @@ const SignUp = () => {
               onChange={passwordChangeHandler}
             />
           </div>
-          <button type='submit' disabled={emailNotValid || passwordNotValid}>
+          <button
+            type='submit'
+            disabled={nameNotValid || emailNotValid || passwordNotValid}
+          >
             Sign up
           </button>
           <p>

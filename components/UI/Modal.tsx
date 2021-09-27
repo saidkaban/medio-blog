@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
-import AuthContext from "../../store/modal-context";
+import ModalContext from "../../store/ModalStore/modal-context";
 import Auth from "../Auth/Auth";
 
 import styles from "./Modal.module.scss";
 
 const Backdrop: React.FC = () => {
-  const authCtx = useContext(AuthContext);
+  const modalCtx = useContext(ModalContext);
 
-  return <div className={styles.backdrop} onClick={authCtx?.closeModal} />;
+  return <div className={styles.backdrop} onClick={modalCtx?.closeModal} />;
 };
 
 const ModalOverlay: React.FC = ({ children }) => {

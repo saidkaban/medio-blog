@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useContext } from "react";
 
-import Link from 'next/link';
-import cx from 'classnames';
+import Link from "next/link";
+import cx from "classnames";
 
-import styles from './DetailHeader.module.scss';
+import styles from "./DetailHeader.module.scss";
+import AuthContext from "../../../store/AuthStore/auth-context";
 
 const DetailHeader = () => {
+  const authCtx = useContext(AuthContext);
+
+  const logoutHandler = () => {
+    localStorage.removeItem("loggedInUserId");
+    localStorage.removeItem("loggedInUserName");
+    authCtx?.logUserOut();
+  };
+
   return (
     <header className={styles.container}>
       <nav className={styles.navbar}>
@@ -18,12 +27,27 @@ const DetailHeader = () => {
             </g>
           </svg>
         </Link>
-        <div className={styles.navigation}>
-          <a href='#' className={cx(styles.navItems, styles.noMobile)}>
-            Sign in
-          </a>
-          <button className={styles.navItems}>Get started</button>
-        </div>
+        {authCtx?.loggedInUser.uid ? (
+          <div className={styles.navigation}>
+            <Link href='/new-post'>
+              <a href='#' className={cx(styles.navItems, styles.noMobile)}>
+                Write
+              </a>
+            </Link>
+            <button className={styles.navItems} onClick={logoutHandler}>
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className={styles.navigation}>
+            <Link href='/sign-in'>
+              <a className={cx(styles.navItems, styles.noMobile)}>Sign in</a>
+            </Link>
+            <Link href='/sign-up' passHref>
+              <button className={styles.navItems}>Get started</button>
+            </Link>
+          </div>
+        )}
       </nav>
     </header>
   );

@@ -1,11 +1,12 @@
 import React, { ChangeEvent, FormEvent, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { app } from "../../lib/firebaseInstance";
 
 import styles from "./SignIn.module.scss";
 import LoadingSpinner from "../UI/LoadingSpinner";
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../store/AuthStore/auth-context";
 
 const SignIn = () => {
   const authCtx = useContext(AuthContext);
@@ -32,12 +33,26 @@ const SignIn = () => {
     setLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Signed in
         const user = userCredential.user;
         if (user.uid) {
-          console.log(user);
-          authCtx?.logUserIn();
+          const db = getFirestore(app);
+          const docRef = doc(db, "users", user.uid);
+          const docSnap = await getDoc(docRef);
+          let userName;
+          if (docSnap.exists()) {
+            userName = docSnap.data()["userName"];
+          }
+
+          localStorage.setItem("loggedInUserId", user.uid);
+          localStorage.setItem("loggedInUserName", userName);
+
+          // sets the cookie cookie1
+          document.cookie = 'authentication=test; expires=Sun, 1 Jan 2023 00:00:00 UTC; path=/';
+
+          authCtx?.logUserIn(user.uid, userName);
+          
           router.replace("/");
         }
       })
@@ -72,10 +87,14 @@ const SignIn = () => {
               onChange={passwordChangeHandler}
             />
           </div>
-          <button type='submit' disabled={emailNotValid || passwordNotValid}>
+          <button
+            className={styles.signIn}
+            type='submit'
+            disabled={emailNotValid || passwordNotValid}
+          >
             Sign in
           </button>
-          <p>
+          <p className={styles.signIn}>
             No account?{" "}
             <a
               onClick={() => router.push("/sign-up")}

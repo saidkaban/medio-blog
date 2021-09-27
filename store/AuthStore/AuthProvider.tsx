@@ -4,18 +4,21 @@ import AuthContext from "./auth-context";
 import type { IAuthContext } from "./auth-context";
 
 const AuthProvider: React.FC = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState<{
+    uid: string;
+    name: string;
+  }>({ uid: "", name: "" });
 
-  const logUserIn = () => {
-    setLoggedIn(true);
+  const logUserIn = (userId: string, name: string) => {
+    setLoggedInUser({ uid: userId, name: name });
   };
 
   const logUserOut = () => {
-    setLoggedIn(false);
+    setLoggedInUser({ uid: "", name: "" });
   };
 
   const authContext: IAuthContext = {
-    loggedIn: loggedIn,
+    loggedInUser: loggedInUser,
     logUserIn: logUserIn,
     logUserOut: logUserOut,
   };
