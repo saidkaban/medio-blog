@@ -1,34 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useContext } from "react";
+import ModalContext from "../../store/ModalStore/modal-context";
+import Auth from "../Auth/Auth";
 
-import classes from './Modal.module.css';
+import styles from "./Modal.module.scss";
 
-const Backdrop: React.FC = (props) => {
-  return <div className={classes.backdrop} onClick={props.onClose} />;
+const Backdrop: React.FC = () => {
+  const modalCtx = useContext(ModalContext);
+
+  return <div className={styles.backdrop} onClick={modalCtx?.closeModal} />;
 };
 
-const ModalOverlay: React.FC = (props) => {
+const ModalOverlay: React.FC = ({ children }) => {
   return (
-    <div className={classes.modal}>
-      <div className={classes.content}>{props.children}</div>
+    <div className={styles.modal}>
+      <div className={styles.content}>{children}</div>
     </div>
   );
 };
 
-const portalElement = document.getElementById('overlays');
-
-const Modal: React.FC = (props) => {
+const Modal: React.FC<{
+  onClose: () => void;
+  type: "sign-in" | "sign-up" | null;
+}> = ({ type, onClose }) => {
   return (
-    <React.Fragment>
-      {ReactDOM.createPortal(
-        <Backdrop onClose={props.onClose} />,
-        portalElement
-      )}
-      {ReactDOM.createPortal(
-        <ModalOverlay>{props.children}</ModalOverlay>,
-        portalElement
-      )}
-    </React.Fragment>
+    type && (
+      <React.Fragment>
+        <Backdrop />
+        <ModalOverlay>
+          <Auth type={type} onClose={onClose} />
+        </ModalOverlay>
+      </React.Fragment>
+    )
   );
 };
 

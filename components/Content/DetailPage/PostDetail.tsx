@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import Image from 'next/image';
+import Image from "next/image";
 
-import styles from './PostDetail.module.scss';
+import styles from "./PostDetail.module.scss";
 
 const PostDetail: React.FC<{
   post: {
@@ -16,10 +16,10 @@ const PostDetail: React.FC<{
 }> = ({ post }) => {
   return (
     <div>
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: "center" }}>
         <h1 className={styles.title}>{post?.title}</h1>
       </div>
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: "center" }}>
         <h3 className={styles.author}>{post?.author}</h3>
         <h5 className={styles.date}>{post?.date}</h5>
       </div>

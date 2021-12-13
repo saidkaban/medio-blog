@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import Link from 'next/link';
-import cx from 'classnames';
+import Link from "next/link";
+import cx from "classnames";
 
-import styles from './DetailHeader.module.scss';
+import styles from "./NewPostHeader.module.scss";
 
-const DetailHeader = () => {
+const NewPostHeader: React.FC<{ onPublish: () => void }> = ({ onPublish }) => {
   return (
     <header className={styles.container}>
       <nav className={styles.navbar}>
@@ -20,13 +20,15 @@ const DetailHeader = () => {
         </Link>
         <div className={styles.navigation}>
           <a href='#' className={cx(styles.navItems, styles.noMobile)}>
-            Sign in
+            Profile
           </a>
-          <button className={styles.navItems}>Get started</button>
+          <button className={styles.navItems} onClick={onPublish}>
+            Publish
+          </button>
         </div>
       </nav>
     </header>
   );
 };
 
-export default DetailHeader;
+export default NewPostHeader;

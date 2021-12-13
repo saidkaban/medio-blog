@@ -1,0 +1,79 @@
+.authScreen {
+  text-align: center;
+  padding: 0 2.5rem 0rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.closeButtonContainer {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  height: 4rem;
+  cursor: pointer;
+}
+
+.closeButton {
+  font-weight: 400;
+}
+
+.title {
+  color: rgba(8, 8, 8, 1);
+  font-size: 2.8rem;
+  font-weight: 400;
+  font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
+  line-height: 3.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.greeting {
+  margin-bottom: 3.2rem;
+}
+
+.authButton {
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  border: 0.5px solid #ccc;
+  border-radius: 50rem;
+  background-color: white;
+  width: 70%;
+  font-size: 1.4rem;
+  &:hover {
+    background-color: rgb(26, 137, 23);
+    color: white;
+  }
+  &:last-of-type {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.authContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > img {
+    width: 16px;
+  }
+}
+
+.switchButton {
+  color: rgb(26, 137, 23);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.disclaimer {
+  font-size: 1.3rem;
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 2rem;
+  color: rgba(117, 117, 117, 1);
+}
+
+.disclaimerLink {
+  text-decoration: underline;
+  cursor: pointer;
+}

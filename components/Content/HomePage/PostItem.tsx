@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
 
-import styles from './PostItem.module.scss';
+import styles from "./PostItem.module.scss";
 
 const PostItem: React.FC<{
   title: string;
@@ -20,7 +20,13 @@ const PostItem: React.FC<{
           <h1>{title}</h1>
           <h4>{date}</h4>
         </div>
-        <Image src={image} alt='Post thumbnail' height={100} width={150} />
+        <Image
+          src={image}
+          alt='Post thumbnail'
+          height={100}
+          width={150}
+          
+        />
       </div>
     </Link>
   );
